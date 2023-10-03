@@ -1,0 +1,113 @@
+image: dkudlek/gcc13.2.0-gtest14.4.0
+
+build:static:debug:
+  stage: build
+  before_script:
+    - export PATH="/usr/local/lib/cmake/GTest:$PATH"
+  script:
+    - mkdir build_static_debug
+    - cd build_static_debug
+    - cmake .. -DCMAKE_INSTALL_PREFIX=../install
+    - cmake --build . --config Debug --target install
+  artifacts:
+    paths:
+      - build_static_debug
+
+build:static:release:
+  stage: build
+  before_script:
+    - export PATH="/usr/local/lib/cmake/GTest:$PATH"
+  script:
+    - mkdir build_static_release
+    - cd build_static_release
+    - cmake .. -DCMAKE_INSTALL_PREFIX=../install
+    - cmake --build . --config Release --target install
+  artifacts:
+    paths:
+      - build_static_release
+
+test:static:debug:
+  stage: test
+  dependencies:
+    - "build:static:debug"
+  script:
+    - cd build_static_debug
+    - ctest -C Debug --verbose  --output-junit result_static_debug.xml
+  artifacts:
+    when: always
+    paths:
+      - build_static_debug/result_static_debug.xml
+    reports:
+      junit:
+        - build_static_debug/result_static_debug.xml
+
+test:static:release:
+  stage: test
+  dependencies:
+    - "build:static:release"
+  script:
+    - cd build_static_release
+    - ctest -C Release --verbose  --output-junit result_static_release.xml
+  artifacts:
+    when: always
+    paths:
+      - build_static_release/result_static_release.xml
+    reports:
+      junit:
+        - build_static_release/result_static_release.xml
+
+build:shared:debug:
+  stage: build
+  before_script:
+    - export PATH="/usr/local/lib/cmake/GTest:$PATH"
+  script:
+    - mkdir build_shared_debug
+    - cd build_shared_debug
+    - cmake .. -DCMAKE_INSTALL_PREFIX=../install -DBUILD_SHARED_LIBS=ON
+    - cmake --build . --config Debug --target install
+  artifacts:
+    paths:
+      - build_shared_debug
+
+build:shared:release:
+  stage: build
+  before_script:
+    - export PATH="/usr/local/lib/cmake/GTest:$PATH"
+  script:
+    - mkdir build_shared_release
+    - cd build_shared_release
+    - cmake .. -DCMAKE_INSTALL_PREFIX=../install -DBUILD_SHARED_LIBS=ON
+    - cmake --build . --config Release --target install
+  artifacts:
+    paths:
+      - build_shared_release
+
+test:shared:debug:
+  stage: test
+  dependencies:
+    - "build:shared:debug"
+  script:
+    - cd build_shared_debug
+    - ctest -C Debug --verbose  --output-junit result_shared_debug.xml
+  artifacts:
+    when: always
+    paths:
+      - build_shared_debug/result_shared_debug.xml
+    reports:
+      junit:
+        - build_shared_debug/result_shared_debug.xml
+
+test:shared:release:
+  stage: test
+  dependencies:
+    - "build:shared:release"
+  script:
+    - cd build_shared_release
+    - ctest -C Release --verbose  --output-junit result_shared_release.xml
+  artifacts:
+    when: always
+    paths:
+      - build_shared_release/result_shared_release.xml
+    reports:
+      junit:
+        - build_shared_release/result_shared_release.xml
