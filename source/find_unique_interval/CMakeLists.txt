@@ -19,7 +19,7 @@ install(
   TARGETS find_unique_interval cpp_compiler_flags
   EXPORT find_unique_interval_targets
   DESTINATION lib)
-install(FILES find_unique_interval.h DESTINATION include)
+install(FILES find_unique_interval.h DESTINATION include/find_unique_interval)
 
 include(CMakePackageConfigHelpers)
 
@@ -41,7 +41,5 @@ install(EXPORT find_unique_interval_targets
   NAMESPACE ${PROJECT_NAME}:: 
   DESTINATION cmake
   )
-
-
 
 add_subdirectory(tests)

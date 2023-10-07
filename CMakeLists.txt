@@ -10,7 +10,7 @@ set(CHALLENGE_CPP_VERSION
  
 # specify the C++ standard
 add_library(cpp_compiler_flags INTERFACE)
-target_compile_features(cpp_compiler_flags INTERFACE cxx_std_11)
+target_compile_features(cpp_compiler_flags INTERFACE cxx_std_20)
 
 # specify the C standard
 add_library(c_compiler_flags INTERFACE)
@@ -42,3 +42,8 @@ enable_testing()
 configure_file(cmake/challenge_cpp_version.h.in ${PROJECT_BINARY_DIR}/challenge_cpp_version.h)
 
 add_subdirectory(source)
+
+
+install(FILES "${PROJECT_BINARY_DIR}/challenge_cpp_version.h"
+  DESTINATION include/${PROJECT_NAME}
+  )
