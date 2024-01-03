@@ -14,10 +14,9 @@ struct IntervalTest {
 
 TEST(find_unique_interval_interval, overlap) {
     std::vector<IntervalTest> tests = {
-        {"0", fui::Interval(0, 4), fui::Interval(3, 5), true},  {"0", fui::Interval(0, 3), fui::Interval(3, 5), true},
-        {"1", fui::Interval(3, 5), fui::Interval(4, 5), true},  {"2", fui::Interval(0, 4), fui::Interval(0, 4), true},
-        {"3", fui::Interval(3, 5), fui::Interval(6, 7), false}, {"4", fui::Interval(3, 5), fui::Interval(6, 7), false},
-        {"4", fui::Interval(4, 5), fui::Interval(6, 7), false}};
+        {"0", fui::Interval(0, 4), fui::Interval(3, 5), true},  {"1", fui::Interval(0, 3), fui::Interval(3, 5), true},
+        {"2", fui::Interval(3, 5), fui::Interval(4, 5), true},  {"3", fui::Interval(0, 4), fui::Interval(0, 4), true},
+        {"4", fui::Interval(3, 5), fui::Interval(6, 7), false}, {"5", fui::Interval(4, 5), fui::Interval(6, 7), false}};
 
     for (auto i : tests) {
         EXPECT_EQ(i.first.overlap(i.second), i.result);
