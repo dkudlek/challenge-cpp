@@ -7,7 +7,8 @@ set(CHALLENGE_CPP_VERSION_PATCH 0)
 set(CHALLENGE_CPP_VERSION
   ${CHALLENGE_CPP_VERSION_MAJOR}.${CHALLENGE_CPP_VERSION_MINOR}.${CHALLENGE_CPP_VERSION_PATCH})
 
- 
+option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
+
 # specify the C++ standard
 add_library(cpp_compiler_flags INTERFACE)
 target_compile_features(cpp_compiler_flags INTERFACE cxx_std_20)
@@ -15,8 +16,6 @@ target_compile_features(cpp_compiler_flags INTERFACE cxx_std_20)
 # specify the C standard
 add_library(c_compiler_flags INTERFACE)
 target_compile_features(c_compiler_flags INTERFACE c_std_90)
-
-option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 
 # add compiler warning flags just when building this project via
 # the BUILD_INTERFACE genex
@@ -43,7 +42,6 @@ configure_file(cmake/challenge_cpp_version.h.in ${PROJECT_BINARY_DIR}/challenge_
 
 add_subdirectory(source)
 
-
 install(FILES "${PROJECT_BINARY_DIR}/challenge_cpp_version.h"
-  DESTINATION include/${PROJECT_NAME}
-  )
+  DESTINATION include
+)
